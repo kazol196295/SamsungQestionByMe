@@ -4,51 +4,40 @@ using namespace std;
 const int INF = 1e9;
 int n;
 vector<vector<int>> dist;
+vector<vector<int>> dp;
 
-int tsp()
-{
-    int size = 1 << n; // 2^n
-    vector<vector<int>> dp(size, vector<int>(n, INF));
-    dp[1][0] = 0; // Start at node 0 with only node 0 visited
+int tsp(int curr, int mask) {
+    if (mask == (1 << n) - 1) {
+        // All cities visited, return to start if possible
+        return dist[curr][0] ? dist[curr][0] : INF;
+    }
 
-    for (int mask = 1; mask < size; ++mask)
-    {
-        for (int u = 0; u < n; ++u)
-        {
-            if (!(mask & (1 << u)))
-                continue; // u is not in mask
-            for (int v = 0; v < n; ++v)
-            {
-                if ((mask & (1 << v)) || dist[u][v] == 0)
-                    continue; // v already visited or no edge
-                int next_mask = mask | (1 << v);
-                dp[next_mask][v] = min(dp[next_mask][v], dp[mask][u] + dist[u][v]);
-            }
+    if (dp[curr][mask] != -1) return dp[curr][mask];
+
+    int ans = INF;
+    for (int next = 0; next < n; ++next) {
+        if (!(mask & (1 << next)) && dist[curr][next] != 0) {
+            int new_mask = mask | (1 << next);
+            int cost = dist[curr][next] + tsp(next, new_mask);
+            ans = min(ans, cost);
         }
     }
-
-    int min_cost = INF;
-    for (int i = 1; i < n; ++i)
-    {
-        if (dist[i][0] == 0)
-            continue;
-        min_cost = min(min_cost, dp[(1 << n) - 1][i] + dist[i][0]);
-    }
-    return min_cost;
+    return dp[curr][mask] = ans;
 }
 
-int main()
-{
+int main() {
     int t;
     cin >> t;
-    while (t--)
-    {
+    while (t--) {
         cin >> n;
         dist.assign(n, vector<int>(n));
         for (int i = 0; i < n; ++i)
             for (int j = 0; j < n; ++j)
                 cin >> dist[i][j];
-        cout << tsp() << endl;
+
+        int size = 1 << n;
+        dp.assign(n, vector<int>(size, -1));
+        cout << tsp(0, 1) << endl; // Start from node 0 with only 0 visited
     }
     return 0;
 }
