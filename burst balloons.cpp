@@ -1,3 +1,4 @@
+//dfs and back track 
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -57,3 +58,61 @@ int main() {
     cout << max_ans << endl;
     return 0;
 }
+
+
+//another solution but vul khuje passina 
+
+/*
+#include <bits/stdc++.h>
+using namespace std;
+int n,mxans;
+vector<int>ar,dp;
+int solve(int mask);
+int main()
+{
+    cin>> n;
+    ar.assign(n,0);
+    for(int i=0;i<n;i++)cin>>ar[i];
+    dp.assign(1<<n,-1);
+    //mxans=INT_MIN;
+    cout<<solve(0)<<endl;
+    
+    //cout<<mxans<<endl;
+    return 0;
+}
+int  solve(int mask)
+{
+    if(mask==(1<<n) -1) return 0;
+    if(dp[mask]!=-1)return dp[mask];
+    int ans=0;mxans=0;
+    for(int i=0;i<n;i++)
+    {
+        if((mask & 1<<i)==0)
+        {
+            int left,right,lf,rf,ans =0;
+            left=right=1;lf=rf=0;
+            // find left neighbor
+            for (int j = i - 1; j >= 0; j--) {
+                if ((mask & (1 << j)) == 0) {
+                    left = ar[j];lf=1;
+                    break;
+                }
+            }
+
+            // find right neighbor
+            for (int j = i + 1; j < n; j++) {
+                if ((mask & (1 << j)) == 0) {
+                    right = ar[j];rf=1;
+                    break;
+                }
+            }
+            if(!lf && !rf ) ans=ar[i];
+            else ans=left*right;
+            int new_mask= mask |1<<i;
+            mxans= max(mxans,ans+solve(new_mask));
+        }
+    }
+    return dp[mask]=mxans;
+}
+
+*/
