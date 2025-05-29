@@ -1,3 +1,5 @@
+//diajkstra fele korte hbe 
+// min cost ber korte hbe protita warm hole check kore 
 #include <bits/stdc++.h>
 using namespace std;
 typedef pair<int,pair<int,int>> p;
