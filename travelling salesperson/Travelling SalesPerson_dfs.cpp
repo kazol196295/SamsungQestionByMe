@@ -1,3 +1,8 @@
+//dfs diye check korte hbe 
+// dfs(node ,count,distance)
+//visited node lagbe 
+//last giye etao check korte hbe j if there  have connection with current node and home 
+
 #include <bits/stdc++.h>
 using namespace std;
 
