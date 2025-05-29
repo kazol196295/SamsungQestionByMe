@@ -1,3 +1,7 @@
+
+// struct nite hbe
+//dfs chalate hbe 
+//min distance calc korte hbe 
 #include <iostream>
 #include <vector>
 #include <cmath>
